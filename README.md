@@ -1,49 +1,64 @@
-# Morning Journal Skill
+# 大富晨间日记 · Morning Journal Skill
 
-A lightweight AI Skill for guided morning journaling, health-data reuse, and optional Notion archiving.
+**[中文说明 / Chinese documentation](README.zh-CN.md)** · [Skill instructions](SKILL.md)
+
+A bilingual, nine-grid morning journal inspired by 佐藤传《晨间日记的奇迹》. 大富晨间日记 combines one-question-at-a-time reflection, authorized **On This Day** recall, health-data reuse, and optional verified Notion archiving.
+
+## The nine grids
+
+Read left to right, top to bottom:
+
+| 1. Dreams / long-term goals | 2. Joy and gratitude | 3. Today's three most important priorities |
+| --- | --- | --- |
+| 4. Health | 5. Money | 6. Relationships |
+| 7. Learning and input | 8. Worries / obstacles / improvements | 9. One sentence of self-encouragement |
+
+This is a user-configured practice inspired by the book, not a reproduction of its exact original template. Its principle: morning journaling makes subconscious thoughts visible and aligns them with your goals, rather than simply logging events.
 
 ## Features
 
-- One-question-at-a-time reflection in your preferred language.
-- Reuses information you have already provided; never invents missing metrics.
-- Separates health observations from subjective wellbeing.
-- Optional Notion archiving with a daily duplicate check and read-back verification.
-- Works as a text-only journal without a Notion connection.
+- Establishes your local journal date and timezone.
+- Asks one question per turn in the fixed grid order; fills known information directly.
+- Reuses supplied sleep, weight, and health observations with dates, units, measurement times, and sources.
+- Accepts short answers, blank answers, skips, and stops; never invents missing content or pads priorities to three.
+- Looks up earlier years' same month/day in an already-authorized journal archive before the interview. Verified matches get a short dated recap; successful empty queries proceed directly; failed reads never become “no history.”
+- Keeps yesterday's review off unless you request it.
+- Returns a clear nine-grid entry with the core principle.
+- Saves to Notion only when authorized: checks the exact local date, updates existing entries, and reads the saved result back to verify.
+- Works in chat without Notion. A journal request or history lookup alone does not authorize saving.
 
 ## Use
 
-Download this repository and give its `SKILL.md` and supporting `reference/` folder to your skill-capable assistant. For an assistant that discovers skills from a local directory, place the contents in a folder named `morning-journal` in its supported skills location. Installation paths and discovery behavior depend on the host application; a GitHub repository alone does not install or activate a skill.
+Download this repository and provide `SKILL.md` together with `reference/` to your skill-capable assistant. For local skill discovery, place them in a folder named `morning-journal` in the host's supported skills location. Paths and discovery behavior depend on the host; a GitHub repository alone does not install or activate a skill.
 
-Example request:
+> Start my morning journal. Ask one question at a time and reuse the sleep data I already shared. Do not save to Notion yet.
 
-> Start my morning journal. Ask one question at a time and reuse the sleep data I already shared.
+> 开始大富晨间日记，复用我已经提供的睡眠和体重；有授权历史档案就先回顾往年同月同日，先不保存。
 
-Or:
+## Optional archive and Notion setup
 
-> 帮我写今天的晨间日记，一次只问一个问题，先不存 Notion。
+Select your journal archive and authorize your assistant's supported integration to read it for On This Day. Without an authorized source, recall is skipped. No historical records are bundled.
 
-## Optional Notion setup
+For saving, connect Notion, grant access to your chosen destination, and request a save. The assistant inspects its actual schema and queries the exact local journal date before writing. One existing entry is updated within your request; multiple entries require clarification; a failed lookup prevents creation. A write is reported as successful only after content read-back verification.
 
-Connect Notion through your assistant's supported integration, grant access to the destination you choose, and explicitly request saving. The assistant must inspect the actual schema and check for an existing entry on the same local calendar date before writing. No Notion connection means the assistant returns journal text without saving it.
-
-This repository contains no credentials or private destination IDs. Keep your own configuration outside the public repository. Only connect health sources you want the assistant to use; there is no built-in health API, scheduler, or automatic synchronization.
+See [history lookup rules](reference/on-this-day.md) and [Notion save rules](reference/notion-destination.md).
 
 ## Files
 
-```text
-SKILL.md
-README.md
-LICENSE
-reference/journal-format.md
-reference/notion-destination.md
-examples/example-session.md
-```
+- [SKILL.md](SKILL.md): interview workflow and authorization boundaries.
+- [README.zh-CN.md](README.zh-CN.md): complete Chinese guide.
+- [reference/journal-format.md](reference/journal-format.md): fixed nine-grid output.
+- [reference/on-this-day.md](reference/on-this-day.md): scoped historical recall and query outcomes.
+- [reference/notion-destination.md](reference/notion-destination.md): duplicate checks, updates, and verification.
+- [examples/example-session.md](examples/example-session.md): fictional interview and failure scenarios.
 
 ## Privacy and limitations
 
-Journal entries can contain sensitive personal information. Review what you ask your assistant to send to Notion. This skill is for reflection, not medical advice. Daily duplicate prevention depends on successful lookups and is not an atomic database constraint.
+Keep credentials, private destination IDs, and personal health/journal records outside this public repository. Review what you send to Notion. This skill supports reflection, not medical advice. It provides no built-in health API, scheduler, or automatic synchronization. Duplicate checks require successful lookups and are not an atomic uniqueness constraint; avoid concurrent saves for the same date.
 
-This v1.0.0 package was reconstructed from the agreed feature summary because the earlier ZIP was unavailable; it is not a byte-for-byte recovery of that archive. The example session is fictional.
+## Discoverability
+
+大富晨间日记 · 晨间日记 · 九宫格晨间日记 · 晨间日记的奇迹 · 佐藤传 · Notion 晨间日记 · morning journal · nine-grid journal · On This Day · health-data reuse
 
 ## License
 

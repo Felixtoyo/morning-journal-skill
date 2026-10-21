@@ -21,3 +21,11 @@ Write only the journal and fields needed for the requested save. Read the result
 If a write times out or returns an uncertain outcome, re-query the same date before retrying. Never blindly repeat a create request. If the result cannot be determined, report that saving is unverified and provide the draft. A preflight query reduces duplicates but is not an atomic uniqueness constraint; avoid concurrent saves for the same date.
 
 Do not claim automatic daily scheduling, health synchronization, or background execution: this skill alone provides none of those capabilities.
+
+## Nine-grid content and history reads
+
+Preserve all nine grids, their fixed order, blank answers, and the core principle in the saved body. Include yesterday's review only when requested. Do not replace unrelated page content or erase existing data merely because a new draft has blank cells; resolve an ambiguous merge with the user.
+
+For authorized historical recall, follow [on-this-day.md](on-this-day.md). Its earlier-year month/day query is separate from the exact local-date lookup required before saving. Never treat failed history reads as evidence that today's entry does not exist.
+
+Read back the complete saved body (including paginated blocks when needed), not just a successful API response or title. Check all intended grid content and any requested review. If verification fails, report “written but unverified” when the write is known to have occurred, or “save outcome unknown” when uncertain; do not claim verified success or blindly create again.

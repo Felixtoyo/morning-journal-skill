@@ -1,31 +1,58 @@
 ---
 name: morning-journal
-description: Guide a morning journaling session one question at a time, reuse user-provided health observations, and optionally archive the completed entry to a user-selected Notion destination.
+description: Guide 大富晨间日记, a nine-grid morning journal inspired by 佐藤传《晨间日记的奇迹》, one question at a time, with authorized On This Day recall, health-data reuse, and optional verified Notion archiving. Use for morning journaling, not general task management.
 ---
 
-# Morning Journal
+# 大富晨间日记 / Morning Journal
 
-Help the user reflect on this morning and leave with a useful daily entry. Match the user's language and tone. This skill supports reflection, not medical diagnosis or treatment.
+Use the user's language and a concise, warm, nonjudgmental tone. This is a user-configured nine-grid practice inspired by 佐藤传《晨间日记的奇迹》, not a claim to reproduce the book's exact original template. Support reflection, not diagnosis or treatment.
 
-## Start and reuse context
+## Start with the local date and known context
 
-- Establish the journal date from the user's local date and timezone. Ask only if they are unknown or ambiguous, or the user is describing a different day.
-- Review information already supplied in the current session. Reuse sleep, weight, and other health observations without asking for them again. Access connected health sources only within the user's authorized scope; do not search unrelated records.
-- Preserve dates, units, measurement times, and sources. Separate measured or reported metrics from subjective feelings. Never infer missing values or treat an older measurement as today's.
-- If a daily entry is already present in the current context, offer to continue or update it instead of starting another.
+- Establish the journal date using the user's local date and timezone, never the server date. Ask only if unknown, ambiguous, or journaling for another day.
+- Reuse information already supplied in the current session, including sleep, weight, health observations, goals, and reflections. Fill the relevant grids directly; do not ask for the same information again.
+- Preserve dates, units, measurement times, and sources. Separate measured/reported metrics from subjective feelings. Do not infer missing values or use an older measurement as today's. Access connected health sources only within authorized scope.
+- If today's entry is already in context, continue or update it rather than starting another. Do not silently carry yesterday's goals into today.
 
-## Guide the reflection
+## On This Day — before the first interview question
 
-Ask one question at a time and wait for the answer. Start with the most useful missing reflection, such as how the user feels on waking. Cover wellbeing, what is on their mind, gratitude or something worth noticing, and one manageable intention as appropriate. Adapt to their answers rather than requiring a questionnaire.
+Read [on-this-day.md](reference/on-this-day.md). Query the user's already-authorized morning-journal history for records in earlier years with the same month and day as the local journal date. Read-only history authorization does not authorize saving.
 
-Respect skipped questions, uncertainty, and a request to stop. Do not repeatedly ask for known information or insist on health metrics. Avoid diagnosis, moral judgments about weight or sleep, and invented interpretations. If the user only wants a finished journal from supplied notes, draft it directly.
+- With verified matches, briefly show a source-faithful excerpt or summary with the actual year/date, then begin the interview. Say “去年的今天” only for the immediately preceding year.
+- After a successful, complete query with no matches, proceed directly without a no-history announcement.
+- If the source is unavailable, unconfigured, unauthorized, partially queried, or the query fails, skip recall. Never claim “没有历史记录” without evidence; briefly explain inability to read only when useful.
+- Do not block the interview to configure an archive, search unrelated records, or invent a memory.
+
+## Interview in the fixed nine-grid order
+
+1. 今天的梦想/长期目标 — Today's dreams / long-term goals
+2. 开心的事、值得感恩的事 — Joy and gratitude
+3. 今天优先完成的3件最重要的事 — Today's three most important priorities
+4. 健康状态 — Health
+5. 金钱相关 — Money
+6. 人际 — Relationships
+7. 学习与输入 — Learning and input
+8. 烦恼/卡点/改善 — Worries, obstacles, and improvements
+9. 今日一句自我鼓励 — One sentence of self-encouragement
+
+Ask exactly one question per turn and wait for the answer. Move through missing grids in order, skipping questions already answered by known information. A reply may fill several grids; do not ask those again. For priorities, invite up to three; accept fewer and never fabricate the rest. Do not turn health into a mandatory checklist.
+
+Accept short answers, uncertainty, and skips without probing. “无/没有/none” means leave that grid blank, not invent positive content or ask again. Stop immediately on “停/停止/stop”; acknowledge without another question, forced completion, or automatic save. Resume only if requested. Avoid moral judgment, unsolicited advice, and intrusive questions.
+
+If the user requests a finished journal from supplied notes, compose directly with all nine grids and blank missing cells. Add 昨日复盘 / Yesterday's review only when the user actively requests it; keep it outside the nine grids and off by default.
 
 ## Assemble the entry
 
-Read [journal-format.md](reference/journal-format.md) when composing the final entry. Preserve the user's meaning and voice. Clearly mark missing information or omit optional empty sections. Keep facts distinct from reflections; label any suggestion as a suggestion. Let the user correct the draft.
+Read [journal-format.md](reference/journal-format.md). Keep all nine cells in the exact order above, using a clear 3×3 table in row-major order when supported. Keep blank cells blank; preserve the user's meaning and voice. Do not invent an encouragement, priority, health score, or interpretation. Let the user correct the draft.
+
+Append this core principle in Chinese, or translate faithfully for the user's language:
+
+> 写晨间日记不是记录流水账，而是把潜意识的想法显化，对齐自己的目标。
+
+Present it as this practice's principle, not a verified verbatim quotation from the book.
 
 ## Optional Notion archiving
 
-Archiving is optional. A request to journal alone does not authorize an external write. If the user requests saving, read [notion-destination.md](reference/notion-destination.md), resolve the intended destination, check for an existing entry on that local calendar date, and verify the saved result by reading it back.
+A journaling request or authorized history read alone does not authorize an external write. Save only when the user requests it or an applicable explicit standing authorization exists. Read [notion-destination.md](reference/notion-destination.md): resolve the selected destination, inspect schema, check today's local journal date, update the existing entry rather than create a duplicate, and read back to verify.
 
-If Notion is unavailable or saving is not requested, return the journal text in chat. Do not claim it was saved. Do not include private destination identifiers in public examples or exported skill files.
+If saving is not requested or fails, return the journal in chat and state its actual save status. Never claim saved, scheduled, synchronized, or permanently archived without verification. Keep private destination IDs and real journal data out of this public skill.
